@@ -29,7 +29,11 @@ public class MovePlate : MonoBehaviour
         {
             GameObject cp = controller.GetComponent<GameScript>().GetPosition(matrixX, matrixY);
 
-            Destroy(cp);
+            Debug.Log(cp.name);
+
+            //Destroy(reference) or Destroy(cp) depending on who wins the fight
+
+            Destroy(reference);
         }
 
         controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
@@ -39,6 +43,8 @@ public class MovePlate : MonoBehaviour
         reference.GetComponent<PieceScript>().SetCoordinates();
 
         controller.GetComponent<GameScript>().SetPosition(reference);
+
+        controller.GetComponent<GameScript>().NextTurn();
 
         reference.GetComponent<PieceScript>().DestroyMovePlates();
     }

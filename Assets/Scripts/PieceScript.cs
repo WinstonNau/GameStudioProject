@@ -75,8 +75,11 @@ public class PieceScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        DestroyMovePlates();
-        InitiateMovePlates();
+        if (!controller.GetComponent<GameScript>().IsGameOver() && controller.GetComponent<GameScript>().GetCurrentPlayer() == player)
+        {
+            DestroyMovePlates();
+            InitiateMovePlates();
+        }
     }
 
     public void DestroyMovePlates()
@@ -120,6 +123,11 @@ public class PieceScript : MonoBehaviour
                 SurroundMovePlate();
                 break;
             case "black_rook":
+                LineMovePlate(1, 0);
+                LineMovePlate(0, 1);
+                LineMovePlate(-1, 0);
+                LineMovePlate(0, -1);
+                break;
             case "white_rook":
                 LineMovePlate(1, 0);
                 LineMovePlate(0, 1);
