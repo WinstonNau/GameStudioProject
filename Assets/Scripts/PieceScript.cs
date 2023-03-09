@@ -44,13 +44,13 @@ public class PieceScript : MonoBehaviour
         float x = xBoard;
         float y = yBoard;
 
-        x *= 0.66f;
-        y *= 0.66f;
+        x *= 1.1f;
+        y *= 1.1f;
 
-        x += -2.3f;
-        y += -2.3f;
+        x += -3.85f;
+        y += -3.85f;
 
-        this.transform.position = new Vector3(x, y, -1.0f);
+        this.transform.position = new Vector3(x, y, 0f);
     }
 
     public int GetXBoard()
