@@ -6,9 +6,9 @@ public class GameScript : MonoBehaviour
 {
     public GameObject gamepiece;
 
-    private GameObject [,] positions = new GameObject[8, 8];
-    private GameObject [] playerBlack = new GameObject[16];
-    private GameObject [] playerWhite = new GameObject[16];
+    private GameObject[,] positions = new GameObject[8, 8];
+    private GameObject[] playerBlack = new GameObject[16];
+    private GameObject[] playerWhite = new GameObject[16];
 
     public string currentPlayer = "white";
 
@@ -55,5 +55,23 @@ public class GameScript : MonoBehaviour
         PieceScript ps = obj.GetComponent<PieceScript>();
 
         positions[ps.GetXBoard(), ps.GetYBoard()] = obj;
+    }
+
+    public void SetPositionEmpty(int x, int y)
+    {
+        positions[x, y] = null;
+    }
+
+    public GameObject GetPosition(int x, int y)
+    {
+        return positions[x, y];
+    }
+
+    public bool PositionOnBoard(int x, int y)
+    {
+        if (x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1))
+            return false;
+        else
+            return true;
     }
 }
