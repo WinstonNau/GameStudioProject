@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
@@ -64,6 +65,27 @@ public class GameScript : MonoBehaviour
         ps.SetYBoard(y);
         ps.Activate();
         return obj;
+    }
+
+    public static string RemoveDigits(string key)
+    {
+        return Regex.Replace(key, @"\d", "");
+    }
+
+    public void StartFight(string attacker, string defender)
+    {
+        StaticClass.fighting = true;
+
+        if (attacker.Contains("white"))
+        {
+            StaticClass.whiteFightPiece = RemoveDigits(attacker.Split('_')[1]);
+            StaticClass.blackFightPiece = RemoveDigits(defender.Split('_')[1]);
+        }
+        else
+        {
+            StaticClass.blackFightPiece = RemoveDigits(attacker.Split('_')[1]);
+            StaticClass.whiteFightPiece = RemoveDigits(defender.Split('_')[1]);
+        }
     }
 
     public void SetPosition(GameObject obj)
