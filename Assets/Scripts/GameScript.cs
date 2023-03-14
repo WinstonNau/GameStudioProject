@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class GameScript : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameScript : MonoBehaviour
     private GameObject[] playerBlack = new GameObject[16];
     private GameObject[] playerWhite = new GameObject[16];
 
+    public string playerColor;
     public string currentPlayer = "white";
 
     private bool gameOver = false;
@@ -18,6 +20,10 @@ public class GameScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerColor = PhotonNetwork.IsMasterClient ? "white" : "black";
+
+        Debug.Log(playerColor);
+
         playerWhite = new GameObject[]
         {
             Create("white_rook", 0, 0), Create("white_knight", 1, 0), Create("white_bishop", 2, 0), Create("white_queen", 3, 0),

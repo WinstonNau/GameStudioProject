@@ -33,7 +33,7 @@ public class MovePlate : MonoBehaviour
 
             //Destroy(reference) or Destroy(cp) depending on who wins the fight
 
-            Destroy(reference);
+            Destroy(cp);
         }
 
         controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
