@@ -10,6 +10,8 @@ public class PieceScript : MonoBehaviour
     private int xBoard = -1;
     private int yBoard = -1;
 
+    public int hp = -1;
+
     private string player;
 
     public Sprite black_king, black_queen, black_knight, black_bishop, black_rook, black_pawn;
@@ -115,7 +117,7 @@ public class PieceScript : MonoBehaviour
                 LineMovePlate(-1, 1);
                 LineMovePlate(-1, -1);
                 break;
-            case string d when d.Contains("white_king"):
+            case string d when d.Contains("king"):
                 SurroundMovePlate();
                 break;
             case string e when e.Contains("rook"):

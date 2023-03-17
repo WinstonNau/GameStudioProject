@@ -32,17 +32,22 @@ public class MovePlate : MonoBehaviour
             //Destroy(reference) or Destroy(cp) depending on who wins the fight
 
             //initialize fight
-            controller.GetComponent<GameScript>().StartFight(reference.name, cp.name);
+            controller.GetComponent<GameScript>().StartFight(reference.name, cp.name, matrixX, matrixY);
+
+            //wait for fight to finish
 
             //controller.GetComponent<GameScript>().DestroyPiece(matrixX, matrixY);
         }
-        controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
+        else
+        {
+            controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
 
-        controller.GetComponent<GameScript>().SetReferencePiecePosition(reference.name, matrixX, matrixY);
+            controller.GetComponent<GameScript>().SetReferencePiecePosition(reference.name, matrixX, matrixY);
 
-        controller.GetComponent<GameScript>().SetPosition(reference.name);
+            controller.GetComponent<GameScript>().SetPosition(reference.name);
 
-        controller.GetComponent<GameScript>().NextTurn();
+            controller.GetComponent<GameScript>().NextTurn();
+        }
 
         reference.GetComponent<PieceScript>().DestroyMovePlates();
     }

@@ -12,6 +12,7 @@ public class GameScript : MonoBehaviour
     private PhotonView photonView;
 
     public GameObject gamepiece;
+    public GameObject fightCanvas;
 
     private GameObject[,] positions = new GameObject[8, 8];
     private GameObject[] playerBlack = new GameObject[16];
@@ -72,20 +73,106 @@ public class GameScript : MonoBehaviour
         return Regex.Replace(key, @"\d", "");
     }
 
-    public void StartFight(string attacker, string defender)
+    public void StartFight(string attacker, string defender, int matrixX, int matrixY)
     {
-        StaticClass.fighting = true;
+        photonView.RPC(nameof(RPC_StartFight), RpcTarget.OthersBuffered, attacker, defender, matrixX, matrixY);
 
         if (attacker.Contains("white"))
         {
-            StaticClass.whiteFightPiece = RemoveDigits(attacker.Split('_')[1]);
-            StaticClass.blackFightPiece = RemoveDigits(defender.Split('_')[1]);
+            StaticClass.whiteFightPiece = attacker;
+            StaticClass.blackFightPiece = defender;
         }
         else
         {
-            StaticClass.blackFightPiece = RemoveDigits(attacker.Split('_')[1]);
-            StaticClass.whiteFightPiece = RemoveDigits(defender.Split('_')[1]);
+            StaticClass.blackFightPiece = attacker;
+            StaticClass.whiteFightPiece = defender;
         }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Chess"))
+        {
+            obj.GetComponent<SpriteRenderer>().enabled = false;
+            if (obj.name != "Board")
+                obj.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        fightCanvas.SetActive(true);
+
+        StaticClass.fighting = true;
+
+        StartCoroutine(GameObject.Find("BattleSystem").GetComponent<BattleSystem>().SetupBattle(attacker, defender, matrixX, matrixY, GameObject.Find(attacker).GetComponent<PieceScript>().hp, GameObject.Find(defender).GetComponent<PieceScript>().hp));
+    }
+
+    [PunRPC]
+    public void RPC_StartFight(string attacker, string defender, int matrixX, int matrixY)
+    {
+        if (attacker.Contains("white"))
+        {
+            StaticClass.whiteFightPiece = attacker;
+            StaticClass.blackFightPiece = defender;
+        }
+        else
+        {
+            StaticClass.blackFightPiece = attacker;
+            StaticClass.whiteFightPiece = defender;
+        }
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Chess"))
+        {
+            obj.GetComponent<SpriteRenderer>().enabled = false;
+            if (obj.name != "Board")
+                obj.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        fightCanvas.SetActive(true);
+
+        StaticClass.fighting = true;
+    }
+
+    public void FightOver(string attacker, string defender, bool attackerWon, int matrixX, int matrixY)
+    {
+        StaticClass.fighting = false;
+        StaticClass.whiteFightPiece = null;
+        StaticClass.blackFightPiece = null;
+        //attacker = reference, defender = cp
+
+        Debug.Log(attacker + defender + attackerWon + matrixX + matrixY);
+
+        GameObject reference = GameObject.Find(attacker);
+        GameObject cp = GameObject.Find(defender);
+
+        if (attackerWon)
+        {
+            Destroy(cp);
+
+            SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
+
+            SetReferencePiecePosition(reference.name, matrixX, matrixY);
+
+            SetPosition(reference.name);
+
+            if (cp.name == "white_king")
+                StartCoroutine(GameOver("black"));
+            else if (cp.name == "black_king")
+                StartCoroutine(GameOver("white"));
+        }
+        else
+        {
+            Destroy(reference);
+
+            if (reference.name == "white_king")
+                StartCoroutine(GameOver("black"));
+            else if (reference.name == "black_king")
+                StartCoroutine(GameOver("white"));
+        }
+
+        NextTurn();
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Chess"))
+        {
+            obj.GetComponent<SpriteRenderer>().enabled = true;
+            if (obj.name != "Board")
+                obj.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        fightCanvas.SetActive(false);
     }
 
     public void SetPosition(GameObject obj)
@@ -97,7 +184,7 @@ public class GameScript : MonoBehaviour
 
     public void SetPosition(string name)
     {
-        photonView.RPC(nameof(RPC_SetPosition), RpcTarget.AllBuffered, name);
+        photonView.RPC(nameof(RPC_SetPosition), RpcTarget.OthersBuffered, name);
 
         GameObject obj = GameObject.Find(name);
 
@@ -118,7 +205,7 @@ public class GameScript : MonoBehaviour
 
     public void SetPositionEmpty(int x, int y)
     {
-        photonView.RPC(nameof(RPC_SetPositionEmpty), RpcTarget.AllBuffered, x, y);
+        photonView.RPC(nameof(RPC_SetPositionEmpty), RpcTarget.OthersBuffered, x, y);
 
         positions[x, y] = null;
     }
@@ -131,7 +218,7 @@ public class GameScript : MonoBehaviour
 
     public void SetReferencePiecePosition(string name, int matrixX, int matrixY)
     {
-        photonView.RPC(nameof(RPC_SetReferencePiecePosition), RpcTarget.AllBuffered, name, matrixX, matrixY);
+        photonView.RPC(nameof(RPC_SetReferencePiecePosition), RpcTarget.OthersBuffered, name, matrixX, matrixY);
 
         GameObject reference = GameObject.Find(name);
 
@@ -152,7 +239,7 @@ public class GameScript : MonoBehaviour
 
     public void DestroyPiece(int x, int y)
     {
-        photonView.RPC(nameof(RPC_DestroyPiece), RpcTarget.AllBuffered, x, y);
+        photonView.RPC(nameof(RPC_DestroyPiece), RpcTarget.OthersBuffered, x, y);
         GameObject obj = GetPosition(x, y);
         Destroy(obj);
     }
@@ -198,12 +285,12 @@ public class GameScript : MonoBehaviour
         if (currentPlayer == "white")
         {
             currentPlayer = "black";
-            photonView.RPC(nameof(RPC_NextTurn), RpcTarget.AllBuffered, "black");
+            photonView.RPC(nameof(RPC_NextTurn), RpcTarget.OthersBuffered, "black");
         }
         else
         {
             currentPlayer = "white";
-            photonView.RPC(nameof(RPC_NextTurn), RpcTarget.AllBuffered, "white");
+            photonView.RPC(nameof(RPC_NextTurn), RpcTarget.OthersBuffered, "white");
 
         }
         Debug.Log(currentPlayer);
@@ -215,13 +302,11 @@ public class GameScript : MonoBehaviour
         currentPlayer = curPlayer;
     }
 
-    public void Update()
+    IEnumerator GameOver(string winner)
     {
-        if (gameOver == true && Input.GetMouseButtonDown(0))
-        {
-            gameOver = false;
-
-            SceneManager.LoadScene("GameScene");
-        }
+        Debug.Log("Game OVER! " + winner + "won!");
+        yield return new WaitForSeconds(3f);
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(0);
     }
 }

@@ -44,6 +44,12 @@ MonoBehaviour:
   - RPC_SetPosition
   - RPC_SetPositionEmpty
   - RPC_SetReferencePiecePosition
+  - RPC_ChangeState
+  - RPC_EndBattle
+  - RPC_EnemyAttack
+  - RPC_SetupBattle
+  - RPC_StartFight
+  - RPC_EnemyHeal
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
