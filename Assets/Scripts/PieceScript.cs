@@ -10,6 +10,8 @@ public class PieceScript : MonoBehaviour
     private int xBoard = -1;
     private int yBoard = -1;
 
+    public int hp = -1;
+
     private string player;
 
     public Sprite black_king, black_queen, black_knight, black_bishop, black_rook, black_pawn;
@@ -25,17 +27,17 @@ public class PieceScript : MonoBehaviour
         switch (this.name)
         {
             case "black_queen": this.GetComponent<SpriteRenderer>().sprite = black_queen; player = "black"; break;
-            case "black_knight": this.GetComponent<SpriteRenderer>().sprite = black_knight; player = "black"; break;
-            case "black_bishop": this.GetComponent<SpriteRenderer>().sprite = black_bishop; player = "black"; break;
+            case string a when a.Contains("black_knight"): this.GetComponent<SpriteRenderer>().sprite = black_knight; player = "black"; break;
+            case string b when b.Contains("black_bishop"): this.GetComponent<SpriteRenderer>().sprite = black_bishop; player = "black"; break;
             case "black_king": this.GetComponent<SpriteRenderer>().sprite = black_king; player = "black"; break;
-            case "black_rook": this.GetComponent<SpriteRenderer>().sprite = black_rook; player = "black"; break;
-            case "black_pawn": this.GetComponent<SpriteRenderer>().sprite = black_pawn; player = "black"; break;
+            case string c when c.Contains("black_rook"): this.GetComponent<SpriteRenderer>().sprite = black_rook; player = "black"; break;
+            case string d when d.Contains("black_pawn"): this.GetComponent<SpriteRenderer>().sprite = black_pawn; player = "black"; break;
             case "white_queen": this.GetComponent<SpriteRenderer>().sprite = white_queen; player = "white"; break;
-            case "white_knight": this.GetComponent<SpriteRenderer>().sprite = white_knight; player = "white"; break;
-            case "white_bishop": this.GetComponent<SpriteRenderer>().sprite = white_bishop; player = "white"; break;
+            case string e when e.Contains("white_knight"): this.GetComponent<SpriteRenderer>().sprite = white_knight; player = "white"; break;
+            case string f when f.Contains("white_bishop"): this.GetComponent<SpriteRenderer>().sprite = white_bishop; player = "white"; break;
             case "white_king": this.GetComponent<SpriteRenderer>().sprite = white_king; player = "white"; break;
-            case "white_rook": this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
-            case "white_pawn": this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
+            case string g when g.Contains("white_rook"): this.GetComponent<SpriteRenderer>().sprite = white_rook; player = "white"; break;
+            case string h when h.Contains("white_pawn"): this.GetComponent<SpriteRenderer>().sprite = white_pawn; player = "white"; break;
         }
     }
 
@@ -75,7 +77,7 @@ public class PieceScript : MonoBehaviour
 
     public void OnMouseUp()
     {
-        if (!controller.GetComponent<GameScript>().IsGameOver() && controller.GetComponent<GameScript>().GetCurrentPlayer() == player)
+        if (!controller.GetComponent<GameScript>().IsGameOver() && controller.GetComponent<GameScript>().GetCurrentPlayer() == player && controller.GetComponent<GameScript>().GetAssignedPlayer() == player)
         {
             DestroyMovePlates();
             InitiateMovePlates();
@@ -96,8 +98,7 @@ public class PieceScript : MonoBehaviour
     {
         switch (this.name)
         {
-            case "black_queen":
-            case "white_queen":
+            case string a when a.Contains("queen"):
                 LineMovePlate(1, 0);
                 LineMovePlate(0, 1);
                 LineMovePlate(1, 1);
@@ -107,37 +108,28 @@ public class PieceScript : MonoBehaviour
                 LineMovePlate(-1, 1);
                 LineMovePlate(1, -1);
                 break;
-            case "black_knight":
-            case "white_knight":
+            case string b when b.Contains("knight"):
                 LMovePlate();
                 break;
-            case "black_bishop":
-            case "white_bishop":
+            case string c when c.Contains("bishop"):
                 LineMovePlate(1, 1);
                 LineMovePlate(1, -1);
                 LineMovePlate(-1, 1);
                 LineMovePlate(-1, -1);
                 break;
-            case "black_king":
-            case "white_king":
+            case string d when d.Contains("king"):
                 SurroundMovePlate();
                 break;
-            case "black_rook":
+            case string e when e.Contains("rook"):
                 LineMovePlate(1, 0);
                 LineMovePlate(0, 1);
                 LineMovePlate(-1, 0);
                 LineMovePlate(0, -1);
                 break;
-            case "white_rook":
-                LineMovePlate(1, 0);
-                LineMovePlate(0, 1);
-                LineMovePlate(-1, 0);
-                LineMovePlate(0, -1);
-                break;
-            case "black_pawn":
+            case string f when f.Contains("black_pawn"):
                 PawnMovePlate(xBoard, yBoard - 1);
                 break;
-            case "white_pawn":
+            case string g when g.Contains("white_pawn"):
                 PawnMovePlate(xBoard, yBoard + 1);
                 break;
         }

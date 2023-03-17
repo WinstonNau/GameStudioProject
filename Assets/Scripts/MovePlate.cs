@@ -25,26 +25,31 @@ public class MovePlate : MonoBehaviour
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
 
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayMoveAudio();
+
         if (attack)
         {
             GameObject cp = controller.GetComponent<GameScript>().GetPosition(matrixX, matrixY);
 
-            Debug.Log(cp.name);
-
             //Destroy(reference) or Destroy(cp) depending on who wins the fight
 
-            Destroy(reference);
+            //initialize fight
+            controller.GetComponent<GameScript>().StartFight(reference.name, cp.name, matrixX, matrixY);
+
+            //wait for fight to finish
+
+            //controller.GetComponent<GameScript>().DestroyPiece(matrixX, matrixY);
         }
+        else
+        {
+            controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
 
-        controller.GetComponent<GameScript>().SetPositionEmpty(reference.GetComponent<PieceScript>().GetXBoard(), reference.GetComponent<PieceScript>().GetYBoard());
+            controller.GetComponent<GameScript>().SetReferencePiecePosition(reference.name, matrixX, matrixY);
 
-        reference.GetComponent<PieceScript>().SetXBoard(matrixX);
-        reference.GetComponent<PieceScript>().SetYBoard(matrixY);
-        reference.GetComponent<PieceScript>().SetCoordinates();
+            controller.GetComponent<GameScript>().SetPosition(reference.name);
 
-        controller.GetComponent<GameScript>().SetPosition(reference);
-
-        controller.GetComponent<GameScript>().NextTurn();
+            controller.GetComponent<GameScript>().NextTurn();
+        }
 
         reference.GetComponent<PieceScript>().DestroyMovePlates();
     }
