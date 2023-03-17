@@ -21,6 +21,9 @@ public class GameScript : MonoBehaviour
     public string playerColor;
     public string currentPlayer = "white";
 
+    public GameObject EndCanvas;
+    public GameObject YouWon, YouLost;
+
     private bool gameOver = false;
 
     private void Awake()
@@ -32,7 +35,6 @@ public class GameScript : MonoBehaviour
     void Start()
     {
         playerColor = PhotonNetwork.IsMasterClient ? "white" : "black";
-
         Debug.Log(playerColor);
 
         playerWhite = new GameObject[]
@@ -305,7 +307,21 @@ public class GameScript : MonoBehaviour
     IEnumerator GameOver(string winner)
     {
         Debug.Log("Game OVER! " + winner + "won!");
-        yield return new WaitForSeconds(3f);
+        EndCanvas.SetActive(true);
+        if (winner == playerColor)
+        {
+            YouLost.SetActive(false);
+            YouWon.SetActive(true);
+            GameObject.Find("Board").GetComponent<AudioScript>().PlayWonAudio();
+        }
+        else
+        {
+            YouLost.SetActive(true);
+            YouWon.SetActive(false);
+            GameObject.Find("Board").GetComponent<AudioScript>().PlayLostAudio();
+        }
+        yield return new WaitForSeconds(6f);
+        EndCanvas.SetActive(false);
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene(0);
     }

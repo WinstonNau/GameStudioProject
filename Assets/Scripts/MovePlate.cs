@@ -25,6 +25,8 @@ public class MovePlate : MonoBehaviour
     {
         controller = GameObject.FindGameObjectWithTag("GameController");
 
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayMoveAudio();
+
         if (attack)
         {
             GameObject cp = controller.GetComponent<GameScript>().GetPosition(matrixX, matrixY);

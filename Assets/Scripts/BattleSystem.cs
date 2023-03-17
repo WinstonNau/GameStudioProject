@@ -42,7 +42,6 @@ public class BattleSystem : MonoBehaviour
 
     public GameObject PawnExplosion, BishopKnightExplosion, RookExplosion, QueenExplosion, KingExplosion;
 
-
     private void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -72,7 +71,7 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.START;
 
         //name: dmg/hp/heal
-        //Pawn: 2/4/1, Rook: 3/10/2, Knight: 3/8/2, Bishop: 3/8/2, Queen: 4/12/3, King: 5/15/4
+        //Pawn: 2/4/1, Rook: 3/10/2, Knight: 3/8/2, Bishop: 3/8/2, Queen: 4/12/3, King: 3/15/2
 
         GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
         playerUnit = playerGO.GetComponent<Unit>();
@@ -86,7 +85,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): playerGO.GetComponentInChildren<Image>().sprite = white_knight; playerUnit.unitName = "White Knight"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): playerGO.GetComponentInChildren<Image>().sprite = white_bishop; playerUnit.unitName = "White Bishop"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string e when e.Contains("queen"): playerGO.GetComponentInChildren<Image>().sprite = white_queen; playerUnit.unitName = "White Queen"; playerUnit.damage = 4; playerUnit.maxHP = 12; playerUnit.currentHP = 12; playerUnit.heal = 3; break;
-                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = white_king; playerUnit.unitName = "White King"; playerUnit.damage = 5; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 4; break;
+                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = white_king; playerUnit.unitName = "White King"; playerUnit.damage = 3; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 2; break;
             }
         } else if (player == "black")
         {
@@ -97,7 +96,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): playerGO.GetComponentInChildren<Image>().sprite = black_knight; playerUnit.unitName = "Black Knight"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): playerGO.GetComponentInChildren<Image>().sprite = black_bishop; playerUnit.unitName = "Black Bishop"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string e when e.Contains("queen"): playerGO.GetComponentInChildren<Image>().sprite = black_queen; playerUnit.unitName = "Black Queen"; playerUnit.damage = 4; playerUnit.maxHP = 12; playerUnit.currentHP = 12; playerUnit.heal = 3; break;
-                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = black_king; playerUnit.unitName = "Black King"; playerUnit.damage = 5; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 4; break;
+                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = black_king; playerUnit.unitName = "Black King"; playerUnit.damage = 3; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 2; break;
             }
         }
 
@@ -114,7 +113,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): enemyGO.GetComponentInChildren<Image>().sprite = white_knight; enemyUnit.unitName = "White Knight"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): enemyGO.GetComponentInChildren<Image>().sprite = white_bishop; enemyUnit.unitName = "White Bishop"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string e when e.Contains("queen"): enemyGO.GetComponentInChildren<Image>().sprite = white_queen; enemyUnit.unitName = "White Queen"; enemyUnit.damage = 4; enemyUnit.maxHP = 12; enemyUnit.currentHP = 12; enemyUnit.heal = 3; break;
-                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = white_king; enemyUnit.unitName = "White King"; enemyUnit.damage = 5; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 4; break;
+                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = white_king; enemyUnit.unitName = "White King"; enemyUnit.damage = 3; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 2; break;
             }
         }
         else if (player == "white")
@@ -126,7 +125,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): enemyGO.GetComponentInChildren<Image>().sprite = black_knight; enemyUnit.unitName = "Black Knight"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): enemyGO.GetComponentInChildren<Image>().sprite = black_bishop; enemyUnit.unitName = "Black Bishop"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string e when e.Contains("queen"): enemyGO.GetComponentInChildren<Image>().sprite = black_queen; enemyUnit.unitName = "Black Queen"; enemyUnit.damage = 4; enemyUnit.maxHP = 12; enemyUnit.currentHP = 12; enemyUnit.heal = 3; break;
-                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = black_king; enemyUnit.unitName = "Black King"; enemyUnit.damage = 5; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 4; break; 
+                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = black_king; enemyUnit.unitName = "Black King"; enemyUnit.damage = 3; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 2; break; 
             }
         }
 
@@ -187,7 +186,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): playerGO.GetComponentInChildren<Image>().sprite = white_knight; playerUnit.unitName = "White Knight"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): playerGO.GetComponentInChildren<Image>().sprite = white_bishop; playerUnit.unitName = "White Bishop"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string e when e.Contains("queen"): playerGO.GetComponentInChildren<Image>().sprite = white_queen; playerUnit.unitName = "White Queen"; playerUnit.damage = 4; playerUnit.maxHP = 12; playerUnit.currentHP = 12; playerUnit.heal = 3; break;
-                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = white_king; playerUnit.unitName = "White King"; playerUnit.damage = 5; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 4; break;
+                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = white_king; playerUnit.unitName = "White King"; playerUnit.damage = 3; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 2; break;
             }
         }
         else if (player == "black")
@@ -199,7 +198,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): playerGO.GetComponentInChildren<Image>().sprite = black_knight; playerUnit.unitName = "Black Knight"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): playerGO.GetComponentInChildren<Image>().sprite = black_bishop; playerUnit.unitName = "Black Bishop"; playerUnit.damage = 3; playerUnit.maxHP = 8; playerUnit.currentHP = 8; playerUnit.heal = 2; break;
                 case string e when e.Contains("queen"): playerGO.GetComponentInChildren<Image>().sprite = black_queen; playerUnit.unitName = "Black Queen"; playerUnit.damage = 4; playerUnit.maxHP = 12; playerUnit.currentHP = 12; playerUnit.heal = 3; break;
-                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = black_king; playerUnit.unitName = "Black King"; playerUnit.damage = 5; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 4; break;
+                case string f when f.Contains("king"): playerGO.GetComponentInChildren<Image>().sprite = black_king; playerUnit.unitName = "Black King"; playerUnit.damage = 3; playerUnit.maxHP = 15; playerUnit.currentHP = 15; playerUnit.heal = 2; break;
             }
         }
 
@@ -215,7 +214,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): enemyGO.GetComponentInChildren<Image>().sprite = white_knight; enemyUnit.unitName = "White Knight"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): enemyGO.GetComponentInChildren<Image>().sprite = white_bishop; enemyUnit.unitName = "White Bishop"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string e when e.Contains("queen"): enemyGO.GetComponentInChildren<Image>().sprite = white_queen; enemyUnit.unitName = "White Queen"; enemyUnit.damage = 4; enemyUnit.maxHP = 12; enemyUnit.currentHP = 12; enemyUnit.heal = 3; break;
-                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = white_king; enemyUnit.unitName = "White King"; enemyUnit.damage = 5; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 4; break;
+                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = white_king; enemyUnit.unitName = "White King"; enemyUnit.damage = 3; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 2; break;
             }
         }
         else if (player == "white")
@@ -227,7 +226,7 @@ public class BattleSystem : MonoBehaviour
                 case string c when c.Contains("knight"): enemyGO.GetComponentInChildren<Image>().sprite = black_knight; enemyUnit.unitName = "Black Knight"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string d when d.Contains("bishop"): enemyGO.GetComponentInChildren<Image>().sprite = black_bishop; enemyUnit.unitName = "Black Bishop"; enemyUnit.damage = 3; enemyUnit.maxHP = 8; enemyUnit.currentHP = 8; enemyUnit.heal = 2; break;
                 case string e when e.Contains("queen"): enemyGO.GetComponentInChildren<Image>().sprite = black_queen; enemyUnit.unitName = "Black Queen"; enemyUnit.damage = 4; enemyUnit.maxHP = 12; enemyUnit.currentHP = 12; enemyUnit.heal = 3; break;
-                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = black_king; enemyUnit.unitName = "Black King"; enemyUnit.damage = 5; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 4; break;
+                case string f when f.Contains("king"): enemyGO.GetComponentInChildren<Image>().sprite = black_king; enemyUnit.unitName = "Black King"; enemyUnit.damage = 3; enemyUnit.maxHP = 15; enemyUnit.currentHP = 15; enemyUnit.heal = 2; break;
             }
         }
 
@@ -304,10 +303,6 @@ public class BattleSystem : MonoBehaviour
         //Check if enemy is dead
         if (isDead)
         {
-            //End the battle
-            Instantiate(PawnExplosion, enemyBattleStation);
-            Destroy(GameObject.Find("Enemy"));
-            yield return new WaitForSeconds(2f);
             ChangeState(player == "white" ? BattleState.WHITEWON : BattleState.BLACKWON);
             EndBattle();
         }
@@ -371,15 +366,22 @@ public class BattleSystem : MonoBehaviour
     {
         photonView.RPC(nameof(RPC_EndBattle), RpcTarget.OthersBuffered);
 
-        bool attackerWon = (attacker.Contains("white") && state == BattleState.WHITEWON) ? true : ((attacker.Contains("black") && state == BattleState.BLACKWON) ? true : false);
-        GameObject.Find("Controller").GetComponent<GameScript>().FightOver(attacker, defender, attackerWon, matrixX, matrixY);
-        GameObject.Find(attackerWon ? attacker : defender).GetComponent<PieceScript>().hp = attackerWon ? (((attacker.Contains("white") && player == "white") || (attacker.Contains("black") && player == "black")) ? (playerUnit.currentHP) : (enemyUnit.currentHP)) : (((defender.Contains("white") && player == "white") || (defender.Contains("black") && player == "black")) ? (playerUnit.currentHP) : (enemyUnit.currentHP));
+        StartCoroutine(CoroutineEndBattle());
     }
 
     [PunRPC]
     void RPC_EndBattle()
     {
+        StartCoroutine(CoroutineEndBattle());
+    }
+
+    IEnumerator CoroutineEndBattle()
+    {
         bool attackerWon = (attacker.Contains("white") && state == BattleState.WHITEWON) ? true : ((attacker.Contains("black") && state == BattleState.BLACKWON) ? true : false);
+
+        dialogueText.text = (attackerWon ? attacker : defender) + " won the battle!";
+        yield return new WaitForSeconds(4f);
+
         GameObject.Find("Controller").GetComponent<GameScript>().FightOver(attacker, defender, attackerWon, matrixX, matrixY);
         GameObject.Find(attackerWon ? attacker : defender).GetComponent<PieceScript>().hp = attackerWon ? (((attacker.Contains("white") && player == "white") || (attacker.Contains("black") && player == "black")) ? (playerUnit.currentHP) : (enemyUnit.currentHP)) : (((defender.Contains("white") && player == "white") || (defender.Contains("black") && player == "black")) ? (playerUnit.currentHP) : (enemyUnit.currentHP));
     }
