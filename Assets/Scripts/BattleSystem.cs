@@ -292,6 +292,8 @@ public class BattleSystem : MonoBehaviour
     {
         photonView.RPC(nameof(RPC_EnemyAttack), RpcTarget.OthersBuffered);
 
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayDamage();
+
         //Damage the enemy
         bool isDead = enemyUnit.TakeDamage(playerUnit.damage);
 
@@ -329,6 +331,7 @@ public class BattleSystem : MonoBehaviour
 
         dialogueText.text = playerUnit.unitName + " is healing...";
         yield return new WaitForSeconds(2f);
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayHeal();
         playerUnit.HealSelf();
         playerHUD.SetHP(playerUnit.currentHP, playerUnit.maxHP);
         dialogueText.text = "Healing successful! +" + playerUnit.heal + "HP";

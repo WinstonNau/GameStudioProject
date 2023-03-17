@@ -3241,6 +3241,9 @@ MonoBehaviour:
   audioWon: {fileID: 8300000, guid: d5872ba0571a2402a85c16c496268454, type: 3}
   audioLost: {fileID: 8300000, guid: 98cc2676be02b44ee9d99218005b2b4b, type: 3}
   audioButtonClick: {fileID: 8300000, guid: 7d3abfef001f64e97b8f15849bafca6a, type: 3}
+  audioBattleMusic: {fileID: 8300000, guid: 4a94cd83989444e988f8467e5464988b, type: 3}
+  audioDamage: {fileID: 8300000, guid: f8aad78286e2049e8ae7f0100db34507, type: 3}
+  audioHeal: {fileID: 8300000, guid: d619015ec6cb846268ccad0cefd9c63a, type: 3}
 --- !u!1 &1515056862
 GameObject:
   m_ObjectHideFlags: 0

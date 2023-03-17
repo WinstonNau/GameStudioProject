@@ -79,6 +79,8 @@ public class GameScript : MonoBehaviour
     {
         photonView.RPC(nameof(RPC_StartFight), RpcTarget.OthersBuffered, attacker, defender, matrixX, matrixY);
 
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayBattleMusic();
+
         if (attacker.Contains("white"))
         {
             StaticClass.whiteFightPiece = attacker;
@@ -107,6 +109,8 @@ public class GameScript : MonoBehaviour
     [PunRPC]
     public void RPC_StartFight(string attacker, string defender, int matrixX, int matrixY)
     {
+        GameObject.Find("Board").GetComponent<AudioScript>().PlayBattleMusic();
+
         if (attacker.Contains("white"))
         {
             StaticClass.whiteFightPiece = attacker;
@@ -136,6 +140,8 @@ public class GameScript : MonoBehaviour
         StaticClass.whiteFightPiece = null;
         StaticClass.blackFightPiece = null;
         //attacker = reference, defender = cp
+
+        GameObject.Find("Board").GetComponent<AudioScript>().StopAudio();
 
         Debug.Log(attacker + defender + attackerWon + matrixX + matrixY);
 

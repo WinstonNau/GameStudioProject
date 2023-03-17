@@ -9,6 +9,9 @@ public class AudioScript : MonoBehaviour
     public AudioClip audioWon;
     public AudioClip audioLost;
     public AudioClip audioButtonClick;
+    public AudioClip audioBattleMusic;
+    public AudioClip audioDamage;
+    public AudioClip audioHeal;
 
     public void PlayMoveAudio()
     {
@@ -33,6 +36,26 @@ public class AudioScript : MonoBehaviour
     public void PlayButtonClick()
     {
         audioSource.PlayOneShot(audioButtonClick);
+    }
+
+    public void PlayBattleMusic()
+    {
+        audioSource.PlayOneShot(audioBattleMusic);
+    }
+
+    public void PlayDamage()
+    {
+        audioSource.PlayOneShot(audioDamage);
+    }
+
+    public void PlayHeal()
+    {
+        audioSource.PlayOneShot(audioHeal);
+    }
+
+    public void StopAudio()
+    {
+        audioSource.Stop();
     }
 
     private void Awake()
